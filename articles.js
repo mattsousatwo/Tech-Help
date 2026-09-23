@@ -1,7 +1,5 @@
 // ======================================================
-
 // TECH HELP — KNOWLEDGE BASE
-
 // ======================================================
 
 const articles = [
@@ -9,7 +7,7 @@ const articles = [
         id: "projector-no-picture",
         title: "Projector has no picture",
         category: "Projectors & Displays",
-        icon: "monitor",
+        icon: "display",
         keywords: [
             "projector",
             "display",
@@ -45,7 +43,7 @@ const articles = [
         id: "projector-no-sound",
         title: "Projector has no sound",
         category: "Projectors & Displays",
-        icon: "volume",
+        icon: "speaker",
         keywords: [
             "projector",
             "audio",
@@ -73,6 +71,214 @@ const articles = [
             {
                 title: "Reconnect HDMI",
                 text: "Disconnect and reconnect the HDMI or USB-C adapter, then check Sound → Output again."
+            }
+        ]
+    },
+
+    {
+        id: "projector-no-signal",
+        title: "Projector says No Signal",
+        category: "Projectors & Displays",
+        icon: "signal",
+        keywords: [
+            "projector",
+            "no signal",
+            "signal",
+            "hdmi",
+            "usb-c",
+            "adapter",
+            "source",
+            "input",
+            "mac detects projector"
+        ],
+        description: "The projector is on, but it says No Signal or shows a blank input screen.",
+        popular: false,
+        steps: [
+            {
+                title: "Choose the correct source",
+                text: "Press Source Search or Input on the projector or remote. Select the HDMI input connected to your computer."
+            },
+            {
+                title: "Reconnect your adapter",
+                text: "Unplug the HDMI or USB-C adapter from your computer, wait a few seconds, and reconnect it firmly."
+            },
+            {
+                title: "Check whether your Mac sees the projector",
+                text: "Open System Settings → Displays. If the projector appears there, the computer is detecting a display connection."
+            },
+            {
+                title: "Try the cable again",
+                text: "Disconnect and reconnect the HDMI cable at the wall plate, adapter, or display connection if it is easy to reach."
+            },
+            {
+                title: "Restart the connection",
+                text: "Restart the projector first. After it finishes starting, reconnect your computer."
+            }
+        ]
+    },
+
+    {
+        id: "projector-blurry",
+        title: "Projector image is blurry",
+        category: "Projectors & Displays",
+        icon: "focus",
+        keywords: [
+            "projector",
+            "blurry",
+            "blur",
+            "fuzzy",
+            "focus",
+            "image",
+            "text",
+            "resolution"
+        ],
+        description: "The projector is showing an image, but text or video looks blurry or out of focus.",
+        popular: false,
+        steps: [
+            {
+                title: "Check the projector focus",
+                text: "Use the projector's focus control and make small adjustments until text looks sharp."
+            },
+            {
+                title: "Make sure the image is filling the screen normally",
+                text: "If the image looks stretched or unusually small, check that the projector is using the normal classroom display source."
+            },
+            {
+                title: "Check your Mac display setting",
+                text: "Open System Settings → Displays and select a recommended resolution for the projector."
+            },
+            {
+                title: "Clean only the outside of the lens",
+                text: "If the lens looks dusty, gently wipe the outside with a clean microfiber cloth. Do not use sprays or liquids on the projector."
+            },
+            {
+                title: "Submit a help request if focus will not improve",
+                text: "If adjusting focus does not make the image sharper, the projector may need service or alignment."
+            }
+        ]
+    },
+
+    {
+        id: "projector-video-garbled",
+        title: "Video is too fast or audio sounds garbled",
+        category: "Projectors & Displays",
+        icon: "play",
+        keywords: [
+            "projector",
+            "video",
+            "youtube",
+            "chrome",
+            "safari",
+            "fast",
+            "sped up",
+            "garbled",
+            "distorted audio",
+            "playback",
+            "hardware acceleration",
+            "graphics acceleration"
+        ],
+        description: "Video playback speeds up, freezes, or the audio becomes distorted while connected to a projector.",
+        popular: false,
+        steps: [
+            {
+                title: "Stop the video and reconnect the display",
+                text: "Pause the video, disconnect the HDMI or USB-C adapter, wait a few seconds, reconnect it, and try again."
+            },
+            {
+                title: "If you are using Chrome, turn off graphics acceleration",
+                text: "Open Chrome → Settings → System. Turn off Use graphics acceleration when available, then choose Relaunch."
+            },
+            {
+                title: "Try another browser",
+                text: "If the problem continues in Chrome, try playing the same video in Safari."
+            },
+            {
+                title: "Restart your Mac",
+                text: "Restart the Mac with the projector disconnected. Sign back in, reconnect the projector, and test the video again."
+            }
+        ]
+    },
+
+    {
+        id: "projector-wont-turn-on",
+        title: "Projector won't turn on",
+        category: "Projectors & Displays",
+        icon: "power",
+        keywords: [
+            "projector",
+            "power",
+            "won't turn on",
+            "wont turn on",
+            "dead",
+            "remote",
+            "status light",
+            "lamp",
+            "flashing light"
+        ],
+        description: "The projector does not start when you press Power.",
+        popular: false,
+        steps: [
+            {
+                title: "Try the projector's Power button",
+                text: "If the remote does not work, press the Power button directly on the projector or classroom control panel."
+            },
+            {
+                title: "Check for status lights",
+                text: "Look for Power, Status, Lamp, or Temperature lights. A flashing or warning light can help IT identify the problem."
+            },
+            {
+                title: "Wait a minute and try again",
+                text: "Some projectors need time to cool down before they can restart. Wait about a minute, then press Power once."
+            },
+            {
+                title: "Check the room's projector power source",
+                text: "If your classroom has a wall switch or power control for the projector, make sure it is turned on."
+            },
+            {
+                title: "Submit a help request if warning lights remain",
+                text: "Tell IT which lights are on or flashing and, if possible, include a photo."
+            }
+        ]
+    },
+
+    {
+        id: "ipad-projector",
+        title: "iPad won't display on the projector",
+        category: "Projectors & Displays",
+        icon: "ipad",
+        keywords: [
+            "ipad",
+            "projector",
+            "airplay",
+            "screen mirroring",
+            "mirror",
+            "apple tv",
+            "hdmi",
+            "adapter",
+            "wireless display"
+        ],
+        description: "Your iPad is not appearing on the classroom projector or wireless display.",
+        popular: false,
+        steps: [
+            {
+                title: "Open Screen Mirroring",
+                text: "Swipe down from the top-right corner of the iPad and tap Screen Mirroring."
+            },
+            {
+                title: "Choose the classroom display",
+                text: "Select the correct Apple TV or classroom display from the list."
+            },
+            {
+                title: "Check Wi-Fi",
+                text: "Make sure the iPad is connected to the school Wi-Fi network."
+            },
+            {
+                title: "If you are using an HDMI adapter",
+                text: "Disconnect and reconnect the adapter, then make sure the projector is on the correct HDMI input."
+            },
+            {
+                title: "Restart the iPad if the display is missing",
+                text: "If the classroom display does not appear in Screen Mirroring, restart the iPad and try again."
             }
         ]
     },
@@ -117,7 +323,7 @@ const articles = [
         id: "mac-display",
         title: "Mac won't connect to a display",
         category: "MacBooks",
-        icon: "laptop",
+        icon: "macbook",
         keywords: [
             "mac",
             "macbook",

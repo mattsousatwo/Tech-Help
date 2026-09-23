@@ -1015,8 +1015,71 @@ a {
 
 .category-icon {
 
-    font-size:
-        29px;
+    width:
+        42px;
+
+    height:
+        42px;
+
+
+    display:
+        grid;
+
+    place-items:
+        center;
+
+
+    background:
+        var(--surface);
+
+
+    color:
+        var(--accent);
+
+
+    border:
+        1px solid
+        var(--border);
+
+
+    border-radius:
+        12px;
+
+}
+
+
+.category-icon svg {
+
+    width:
+        24px;
+
+    height:
+        24px;
+
+
+    fill:
+        none;
+
+
+    stroke:
+        currentColor;
+
+    stroke-width:
+        1.75;
+
+    stroke-linecap:
+        round;
+
+    stroke-linejoin:
+        round;
+
+}
+
+
+.category-card:hover .category-icon {
+
+    background:
+        var(--card);
 
 }
 

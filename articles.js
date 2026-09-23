@@ -490,6 +490,75 @@ const articles = [
     },
 
     {
+        id: "chromebook-wifi",
+        title: "Chromebook won't connect to Wi-Fi",
+        category: "Chromebooks",
+        icon: "wifi",
+        keywords: ["chromebook", "wifi", "wi-fi", "internet", "network", "offline", "connection"],
+        description: "The Chromebook cannot connect to Wi-Fi or keeps disconnecting.",
+        popular: false,
+        steps: [
+            { title: "Check Wi-Fi", text: "Select the time in the bottom-right corner and make sure Wi-Fi is turned on." },
+            { title: "Choose the school network", text: "Select the correct school Wi-Fi network and give the Chromebook a moment to connect." },
+            { title: "Turn Wi-Fi off and back on", text: "Turn Wi-Fi off, wait about 10 seconds, then turn it back on and try again." },
+            { title: "Restart the Chromebook", text: "Shut the Chromebook down completely, turn it back on, and try the network again." },
+            { title: "Submit a help request if it still won't connect", text: "If other devices have internet but this Chromebook does not, send IT the Chromebook's asset tag if available." }
+        ]
+    },
+
+    {
+        id: "chromebook-frozen",
+        title: "Chromebook is frozen",
+        category: "Chromebooks",
+        icon: "laptop",
+        keywords: ["chromebook", "frozen", "freeze", "stuck", "not responding", "restart", "crashed"],
+        description: "The Chromebook screen or an app is stuck and will not respond.",
+        popular: false,
+        steps: [
+            { title: "Wait a few seconds", text: "Give the Chromebook about 15–30 seconds in case an app or webpage is temporarily busy." },
+            { title: "Try closing the problem tab or app", text: "If the mouse still works, close the tab or app that is not responding." },
+            { title: "Restart the Chromebook", text: "Select the time in the bottom-right corner, choose Power, then turn the Chromebook back on." },
+            { title: "Force it off if necessary", text: "If nothing responds, press and hold the Power button until the Chromebook turns off. Wait a few seconds, then turn it back on." },
+            { title: "Get help if freezing continues", text: "If the Chromebook repeatedly freezes after restarting, submit a help request and include the asset tag if available." }
+        ]
+    },
+
+    {
+        id: "chromebook-recovery-screen",
+        title: "Chromebook shows a recovery screen",
+        category: "Chromebooks",
+        icon: "warning",
+        keywords: ["chromebook", "recovery", "recovery screen", "chrome os missing", "damaged", "error", "restore"],
+        description: "The Chromebook starts on a recovery or ChromeOS error screen.",
+        popular: false,
+        steps: [
+            { title: "Don't erase the Chromebook", text: "If you see a recovery message, do not start a recovery or reinstall ChromeOS unless IT has instructed you to." },
+            { title: "Restart once", text: "Turn the Chromebook off, wait a few seconds, and turn it back on." },
+            { title: "Disconnect accessories", text: "Remove USB drives, adapters, or other accessories and try starting the Chromebook again." },
+            { title: "Take a photo of the message", text: "If the recovery screen returns, take a clear photo of the message or error code." },
+            { title: "Submit a help request", text: "Send IT the photo and the Chromebook's asset tag if available. The device may need ChromeOS recovery or repair." }
+        ]
+    },
+
+    {
+        id: "chromebook-powerwash",
+        title: "Powerwash a Chromebook",
+        category: "Chromebooks",
+        icon: "warning",
+        keywords: ["chromebook", "powerwash", "reset", "factory reset", "erase", "wipe"],
+        description: "Reset a Chromebook when IT has instructed you to Powerwash it.",
+        popular: false,
+        warning: "Powerwash erases local data and resets the Chromebook. Only continue if IT has instructed you to do this.",
+        steps: [
+            { title: "Confirm you should Powerwash", text: "Make sure IT has asked you to reset this Chromebook. Files stored only in Downloads or other local locations can be erased." },
+            { title: "Sign out", text: "Sign out of the Chromebook so you are back at the main sign-in screen." },
+            { title: "Open the reset screen", text: "Press Ctrl + Alt + Shift + R." },
+            { title: "Choose Restart", text: "Select Restart. When the reset window appears, choose Powerwash and then Continue." },
+            { title: "Let the Chromebook finish", text: "The Chromebook will restart and return to its setup screen. If it is a school-managed Chromebook, follow your school's normal setup process or contact IT." }
+        ]
+    },
+
+    {
         id: "mac-display",
         title: "Mac won't connect to a display",
         category: "MacBooks",
@@ -523,6 +592,73 @@ const articles = [
                 title: "Restart your Mac",
                 text: "Restart the Mac with the display disconnected, then reconnect it after signing in."
             }
+        ]
+    },
+
+    {
+        id: "mac-no-sound",
+        title: "Mac has no sound",
+        category: "MacBooks",
+        icon: "speaker",
+        keywords: ["mac", "macbook", "sound", "audio", "no sound", "speaker", "volume"],
+        description: "There is no sound from the Mac or sound is going to the wrong device.",
+        popular: false,
+        steps: [
+            { title: "Check the volume", text: "Use the volume controls and make sure the Mac is not muted." },
+            { title: "Check the sound output", text: "Open Control Center → Sound and make sure the correct speakers or device are selected." },
+            { title: "Disconnect unwanted audio devices", text: "Disconnect headphones, HDMI adapters, or Bluetooth audio devices you are not trying to use." },
+            { title: "Quit and reopen the app", text: "Close the app or browser that has no sound, reopen it, and test again." },
+            { title: "Restart the Mac", text: "If sound is still missing, restart the Mac. Submit a help request if the problem continues." }
+        ]
+    },
+
+    {
+        id: "mac-frozen",
+        title: "Mac is frozen",
+        category: "MacBooks",
+        icon: "macbook",
+        keywords: ["mac", "macbook", "frozen", "freeze", "stuck", "not responding", "force quit"],
+        description: "An app or the entire Mac has stopped responding.",
+        popular: false,
+        steps: [
+            { title: "Try Force Quit", text: "Press Option + Command + Esc. Select the app that is not responding and choose Force Quit." },
+            { title: "Try the Apple menu", text: "If the Mac still responds, choose Apple menu → Restart." },
+            { title: "Force the Mac off only if needed", text: "If the entire Mac is unresponsive, press and hold the power or Touch ID button until the Mac turns off." },
+            { title: "Start it again", text: "Wait a few seconds, turn the Mac back on, and reopen only the apps you need." },
+            { title: "Get help if it keeps freezing", text: "If the problem happens repeatedly, submit a help request and mention which app was being used when it froze." }
+        ]
+    },
+
+    {
+        id: "restart-mac",
+        title: "Restart or force restart a Mac",
+        category: "MacBooks",
+        icon: "power",
+        keywords: ["mac", "macbook", "restart", "reboot", "force restart", "power", "shut down"],
+        description: "Restart a Mac normally or force it off when it is completely unresponsive.",
+        popular: false,
+        steps: [
+            { title: "Restart normally when possible", text: "Choose Apple menu → Restart. This is the preferred way to restart a Mac." },
+            { title: "If an app is blocking the restart", text: "Press Option + Command + Esc, Force Quit the problem app, then try Restart again." },
+            { title: "Force it off only when frozen", text: "If the Mac does not respond at all, press and hold the power or Touch ID button until the screen turns off." },
+            { title: "Wait before turning it back on", text: "Wait about 10 seconds, then press the power button once to start the Mac." }
+        ]
+    },
+
+    {
+        id: "chrome-video-playback",
+        title: "Chrome video playback problems",
+        category: "MacBooks",
+        icon: "play",
+        keywords: ["mac", "macbook", "chrome", "video", "youtube", "garbled audio", "fast video", "projector", "graphics acceleration", "hardware acceleration"],
+        description: "Video freezes, plays too fast, will not start, or has garbled audio in Chrome.",
+        popular: false,
+        steps: [
+            { title: "Reload the page", text: "Reload the webpage and try the video again." },
+            { title: "Reconnect the display if one is attached", text: "If you are using a projector or monitor, disconnect and reconnect the display cable or adapter." },
+            { title: "Try Safari", text: "Open the same video in Safari. If it works there, the issue is likely limited to Chrome." },
+            { title: "Turn off Chrome graphics acceleration", text: "In Chrome, open Settings → System and turn off Use graphics acceleration when available, then relaunch Chrome." },
+            { title: "Restart the Mac", text: "If playback is still broken, restart the Mac and test again." }
         ]
     },
 
@@ -561,4 +697,124 @@ const articles = [
             }
         ]
     }
+    ,
+    {
+        id: "ipad-wont-turn-on",
+        title: "iPad won't turn on",
+        category: "iPads",
+        icon: "ipad",
+        keywords: ["ipad", "power", "won't turn on", "black screen", "battery", "charging"],
+        description: "The iPad has a black screen or will not power on.",
+        popular: false,
+        steps: [
+            { title: "Connect the charger", text: "Plug the iPad into a known-working charger and power outlet." },
+            { title: "Let it charge", text: "Leave it connected for at least 15–20 minutes if the battery may be completely drained." },
+            { title: "Try turning it on", text: "Press and hold the top button until the Apple logo appears." },
+            { title: "Try a force restart", text: "On an iPad without a Home button: quickly press Volume Up, quickly press Volume Down, then hold the top button until the Apple logo appears. On an iPad with a Home button: hold the Home and top buttons together until the Apple logo appears." },
+            { title: "Submit a help request", text: "If the iPad still shows no sign of power, send IT the device or asset information if available." }
+        ]
+    },
+
+    {
+        id: "ipad-frozen",
+        title: "iPad is frozen",
+        category: "iPads",
+        icon: "ipad",
+        keywords: ["ipad", "frozen", "freeze", "stuck", "not responding", "force restart"],
+        description: "The iPad screen or an app is stuck and does not respond.",
+        popular: false,
+        steps: [
+            { title: "Wait a few seconds", text: "Give the app a moment in case it is temporarily busy." },
+            { title: "Return to the Home Screen", text: "Swipe up from the bottom of the screen, or press the Home button on iPads that have one." },
+            { title: "Close the problem app", text: "Open the app switcher and swipe the problem app away, then reopen it." },
+            { title: "Force restart if the whole iPad is frozen", text: "Without a Home button: quickly press Volume Up, quickly press Volume Down, then hold the top button until the Apple logo appears. With a Home button: hold Home and the top button until the Apple logo appears." },
+            { title: "Get help if it keeps happening", text: "Submit a help request if the iPad repeatedly freezes after restarting." }
+        ]
+    },
+
+    {
+        id: "ipad-connect-projector",
+        title: "Connect an iPad to a projector",
+        category: "iPads",
+        icon: "ipad",
+        keywords: ["ipad", "projector", "display", "hdmi", "adapter", "screen mirror", "screen mirroring"],
+        description: "Display an iPad on a classroom projector or display.",
+        popular: false,
+        steps: [
+            { title: "Turn on the classroom display", text: "Turn on the projector or display and choose the classroom's normal input or source." },
+            { title: "Connect the iPad", text: "If the room uses a cable, connect the correct USB-C or Lightning display adapter and HDMI cable to the iPad." },
+            { title: "For wireless displays, open Screen Mirroring", text: "Open Control Center, select Screen Mirroring, and choose the classroom display if it appears." },
+            { title: "Check Wi-Fi for wireless mirroring", text: "Make sure the iPad is connected to the school Wi-Fi network." },
+            { title: "Reconnect if there is no picture", text: "Disconnect and reconnect the adapter or stop and restart Screen Mirroring. Submit a help request if the display still does not appear." }
+        ]
+    },
+
+    {
+        id: "ipad-airplay-not-working",
+        title: "AirPlay or Screen Mirroring isn't working",
+        category: "iPads",
+        icon: "display",
+        keywords: ["ipad", "airplay", "screen mirroring", "mirror", "projector", "display", "wireless"],
+        description: "The classroom display does not appear in Screen Mirroring or the connection fails.",
+        popular: false,
+        steps: [
+            { title: "Check Wi-Fi", text: "Make sure the iPad is connected to the school Wi-Fi network." },
+            { title: "Open Screen Mirroring again", text: "Open Control Center → Screen Mirroring and wait a few seconds for available displays to appear." },
+            { title: "Make sure the classroom display is ready", text: "Turn on the projector or display and make sure its wireless display or AirPlay setup is active if your room uses it." },
+            { title: "Turn Wi-Fi off and back on", text: "On the iPad, turn Wi-Fi off, wait about 10 seconds, then turn it back on and try again." },
+            { title: "Restart the iPad", text: "Restart the iPad if the display is still missing. If other iPads also cannot connect, submit a help request for the classroom display." }
+        ]
+    },
+
+    {
+        id: "no-internet",
+        title: "No internet connection",
+        category: "Internet & Wi-Fi",
+        icon: "wifi",
+        keywords: ["internet", "wifi", "wi-fi", "offline", "network", "no internet", "connection"],
+        description: "Your device cannot get online.",
+        popular: false,
+        steps: [
+            { title: "Check Wi-Fi", text: "Make sure Wi-Fi is turned on and that you are connected to the school network." },
+            { title: "Try another website", text: "Open a different website to make sure the problem is not limited to one site." },
+            { title: "Reconnect to Wi-Fi", text: "Turn Wi-Fi off, wait about 10 seconds, then turn it back on and reconnect." },
+            { title: "Restart the device", text: "Restart your MacBook, Chromebook, or iPad and test the connection again." },
+            { title: "Check whether others are affected", text: "If several devices in the same room have no internet, submit a help request and include the room number or location." }
+        ]
+    },
+
+    {
+        id: "wifi-connected-no-internet",
+        title: "Wi-Fi is connected but internet isn't working",
+        category: "Internet & Wi-Fi",
+        icon: "wifi",
+        keywords: ["wifi", "wi-fi", "connected", "no internet", "internet", "network", "website"],
+        description: "The device shows Wi-Fi as connected, but websites or online apps do not work.",
+        popular: false,
+        steps: [
+            { title: "Try another website", text: "Open a different website or service. One website may be temporarily unavailable even when your internet is working." },
+            { title: "Turn Wi-Fi off and back on", text: "Turn Wi-Fi off, wait about 10 seconds, then turn it back on." },
+            { title: "Reconnect to the school network", text: "Make sure the device reconnects to the correct school Wi-Fi network." },
+            { title: "Restart the device", text: "Restart the device and test again." },
+            { title: "Check another device", text: "If multiple devices in the room show the same problem, submit a help request with the room or location." }
+        ]
+    },
+
+    {
+        id: "ethernet-not-working",
+        title: "Ethernet isn't working",
+        category: "Internet & Wi-Fi",
+        icon: "network",
+        keywords: ["ethernet", "wired", "network", "internet", "cable", "adapter", "no internet"],
+        description: "A device connected with an Ethernet cable is not getting a network connection.",
+        popular: false,
+        steps: [
+            { title: "Check both ends of the cable", text: "Make sure the Ethernet cable is firmly connected to the device or adapter and to the wall jack or network connection." },
+            { title: "Reconnect the adapter", text: "If you are using a USB-C Ethernet adapter, unplug it from the computer and reconnect it." },
+            { title: "Look for obvious cable damage", text: "Check for a broken connector, loose clip, crushed cable, or exposed wires. Do not continue using a visibly damaged cable." },
+            { title: "Restart the device", text: "Restart the computer or connected device and test the connection again." },
+            { title: "Submit a help request", text: "If Ethernet still does not work, tell IT the room, wall jack or device location, and whether Wi-Fi works on the same device." }
+        ]
+    }
+
 ];

@@ -320,6 +320,176 @@ const articles = [
     },
 
     {
+        id: "followme-print-missing",
+        title: "FollowMe print isn't showing up",
+        category: "Printing",
+        icon: "printer",
+        keywords: [
+            "followme",
+            "follow me",
+            "followme print",
+            "missing",
+            "not showing",
+            "not showing up",
+            "printer",
+            "printing",
+            "papercut",
+            "print option",
+            "print queue"
+        ],
+        description: "FollowMe does not appear as an option when you try to print.",
+        popular: false,
+        steps: [
+            {
+                title: "Check the printer list",
+                text: "Open the print window and select the Printer menu. Look for FollowMe in the list."
+            },
+            {
+                title: "Make sure you are on the school network",
+                text: "Check that your Mac is connected to the school network, then close and reopen the print window."
+            },
+            {
+                title: "Quit and reopen the app",
+                text: "Quit the app you are printing from, reopen it, and check the printer list again."
+            },
+            {
+                title: "Restart your Mac",
+                text: "Restart your Mac, sign back in, and check whether FollowMe appears."
+            },
+            {
+                title: "Submit a help request if FollowMe is still missing",
+                text: "If FollowMe still does not appear after restarting, IT may need to reinstall or repair the FollowMe printing setup on your Mac."
+            }
+        ]
+    },
+
+    {
+        id: "print-job-not-showing",
+        title: "Print job isn't showing at the printer",
+        category: "Printing",
+        icon: "printer",
+        keywords: [
+            "print job",
+            "printer",
+            "printing",
+            "papercut",
+            "followme",
+            "follow me",
+            "release",
+            "queue",
+            "job missing",
+            "not showing"
+        ],
+        description: "You sent something to FollowMe, but the job does not appear when you sign in at the printer.",
+        popular: false,
+        steps: [
+            {
+                title: "Make sure you printed to FollowMe",
+                text: "Open the document again and confirm that FollowMe was selected as the printer."
+            },
+            {
+                title: "Wait a moment and check again",
+                text: "A new print job can take a short time to reach PaperCut. Wait about 30 seconds, then refresh or sign in at the printer again."
+            },
+            {
+                title: "Check the Mac print queue",
+                text: "Open System Settings → Printers & Scanners, select FollowMe, and open the print queue. Look for a paused or failed job."
+            },
+            {
+                title: "Try a small test print",
+                text: "Send a simple one-page document to FollowMe. If the test job appears, try printing the original document again."
+            },
+            {
+                title: "Submit a help request if no jobs appear",
+                text: "Let IT know that FollowMe is available on your Mac but your jobs are not appearing at the printer."
+            }
+        ]
+    },
+
+    {
+        id: "add-printer-mac",
+        title: "Add a printer on Mac",
+        category: "Printing",
+        icon: "printer",
+        keywords: [
+            "add printer",
+            "install printer",
+            "mac",
+            "macbook",
+            "printer",
+            "printing",
+            "printers and scanners",
+            "followme",
+            "follow me"
+        ],
+        description: "You need to add or reconnect a printer on your Mac.",
+        popular: false,
+        steps: [
+            {
+                title: "Open Printers & Scanners",
+                text: "Open System Settings → Printers & Scanners."
+            },
+            {
+                title: "Choose Add Printer",
+                text: "Click Add Printer, Scanner, or Fax and wait for the available printer list to load."
+            },
+            {
+                title: "Choose the correct printer",
+                text: "Select the printer you need only if you recognize its name. If you are trying to restore FollowMe and it is not listed, do not choose a different printer as a substitute."
+            },
+            {
+                title: "Add the printer",
+                text: "Click Add and wait for macOS to finish setting it up."
+            },
+            {
+                title: "Ask IT if the printer is not listed",
+                text: "If the printer or FollowMe option you need does not appear, submit a help request rather than changing advanced printer settings."
+            }
+        ]
+    },
+
+    {
+        id: "printer-offline",
+        title: "Printer says offline",
+        category: "Printing",
+        icon: "printer",
+        keywords: [
+            "printer offline",
+            "offline",
+            "printer",
+            "printing",
+            "not responding",
+            "paused",
+            "queue",
+            "connection"
+        ],
+        description: "Your Mac shows the printer as offline or unavailable.",
+        popular: false,
+        steps: [
+            {
+                title: "Check the printer",
+                text: "Make sure the printer is powered on and does not show an error such as a paper jam, open door, or empty paper tray."
+            },
+            {
+                title: "Check your network connection",
+                text: "Make sure your Mac is connected to the school network."
+            },
+            {
+                title: "Check the print queue",
+                text: "Open System Settings → Printers & Scanners, select the printer, and open the print queue. Resume the printer if it is paused."
+            },
+            {
+                title: "Clear a failed job",
+                text: "If one print job is stuck or showing an error, remove that job and try printing again."
+            },
+            {
+                title: "Submit a help request if it stays offline",
+                text: "If the printer remains offline, let IT know which printer you are trying to use and where it is located."
+            }
+        ]
+    },
+
+    {
         id: "mac-display",
         title: "Mac won't connect to a display",
         category: "MacBooks",

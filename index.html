@@ -3,11 +3,200 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#f7f8fa">
+
     <title>Tech Help</title>
+    <meta name="description" content="Quick answers to common technology problems.">
+
+    <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
-    <h1>Tech Help</h1>
-    <p>Quick answers to common technology problems.</p>
+
+<header class="site-header">
+    <div class="header-inner">
+        <a href="./" class="brand">
+            <span class="brand-icon">T</span>
+            <span>Tech Help</span>
+        </a>
+
+        <a href="#get-help" class="header-help">Get Help</a>
+    </div>
+</header>
+
+<main>
+
+    <!-- HERO -->
+    <section class="hero">
+        <div class="hero-inner">
+
+            <p class="eyebrow">TECH SUPPORT</p>
+
+            <h1>What can we<br>help you with?</h1>
+
+            <p class="hero-description">
+                Quick answers to common technology problems.
+            </p>
+
+            <div class="search-wrapper">
+                <svg class="search-icon" viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="m21 21-4.35-4.35m2.35-5.65a8 8 0 1 1-16 0 8 8 0 0 1 16 0Z"/>
+                </svg>
+
+                <input
+                    id="searchInput"
+                    type="search"
+                    placeholder="Search for a problem..."
+                    autocomplete="off"
+                    aria-label="Search tech help"
+                >
+            </div>
+
+            <div id="searchResults" class="search-results"></div>
+
+        </div>
+    </section>
+
+
+    <!-- CATEGORIES -->
+    <section class="section">
+        <div class="section-inner">
+
+            <h2>Browse by category</h2>
+
+            <div class="category-grid">
+
+                <a href="#" class="category-card">
+                    <span class="category-icon">🖨️</span>
+                    <div>
+                        <h3>Printing</h3>
+                        <p>Printers, PaperCut & FollowMe</p>
+                    </div>
+                    <span class="arrow">›</span>
+                </a>
+
+                <a href="#" class="category-card">
+                    <span class="category-icon">📽️</span>
+                    <div>
+                        <h3>Projectors & Displays</h3>
+                        <p>No picture, sound & connections</p>
+                    </div>
+                    <span class="arrow">›</span>
+                </a>
+
+                <a href="#" class="category-card">
+                    <span class="category-icon">💻</span>
+                    <div>
+                        <h3>Chromebooks</h3>
+                        <p>Startup, Wi-Fi & recovery</p>
+                    </div>
+                    <span class="arrow">›</span>
+                </a>
+
+                <a href="#" class="category-card">
+                    <span class="category-icon">🍎</span>
+                    <div>
+                        <h3>MacBooks</h3>
+                        <p>Displays, audio & software</p>
+                    </div>
+                    <span class="arrow">›</span>
+                </a>
+
+                <a href="#" class="category-card">
+                    <span class="category-icon">📱</span>
+                    <div>
+                        <h3>iPads</h3>
+                        <p>Apps, displays & connectivity</p>
+                    </div>
+                    <span class="arrow">›</span>
+                </a>
+
+                <a href="#" class="category-card">
+                    <span class="category-icon">🌐</span>
+                    <div>
+                        <h3>Internet & Wi-Fi</h3>
+                        <p>Network and connection problems</p>
+                    </div>
+                    <span class="arrow">›</span>
+                </a>
+
+            </div>
+        </div>
+    </section>
+
+
+    <!-- POPULAR -->
+    <section class="section popular-section">
+        <div class="section-inner">
+
+            <div class="section-heading">
+                <div>
+                    <p class="eyebrow">QUICK FIXES</p>
+                    <h2>Popular solutions</h2>
+                </div>
+            </div>
+
+            <div class="solution-list">
+
+                <a href="#" class="solution">
+                    <span>Projector has no picture</span>
+                    <span>›</span>
+                </a>
+
+                <a href="#" class="solution">
+                    <span>Projector has no sound</span>
+                    <span>›</span>
+                </a>
+
+                <a href="#" class="solution">
+                    <span>FollowMe / PaperCut isn't working</span>
+                    <span>›</span>
+                </a>
+
+                <a href="#" class="solution">
+                    <span>Mac won't connect to a display</span>
+                    <span>›</span>
+                </a>
+
+                <a href="#" class="solution">
+                    <span>Chromebook won't turn on</span>
+                    <span>›</span>
+                </a>
+
+            </div>
+
+        </div>
+    </section>
+
+
+    <!-- GET HELP -->
+    <section id="get-help" class="help-section">
+        <div class="help-card">
+
+            <div class="help-icon">?</div>
+
+            <h2>Still need help?</h2>
+
+            <p>
+                Can't find the answer you're looking for?
+                Send us a help request.
+            </p>
+
+            <a href="#" class="primary-button">
+                Submit a Help Request
+            </a>
+
+        </div>
+    </section>
+
+</main>
+
+
+<footer>
+    <p>Tech Help</p>
+</footer>
+
+<script src="script.js"></script>
+
 </body>
 </html>

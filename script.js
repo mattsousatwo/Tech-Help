@@ -22,6 +22,104 @@ const popularLinks =
 
 
 // ======================================================
+// NAVIGATION STATE
+// ======================================================
+
+let currentCategory = null;
+
+let articleSource = null;
+
+
+
+// ======================================================
+// HELPERS
+// ======================================================
+
+function categoryToSlug(category) {
+
+    return category
+        .toLowerCase()
+        .replace(/&/g, "and")
+        .replace(/[^a-z0-9]+/g, "-")
+        .replace(/^-|-$/g, "");
+
+}
+
+
+
+function getCategoryFromSlug(slug) {
+
+    const categories = [
+        ...new Set(
+            articles.map(
+                article => article.category
+            )
+        )
+    ];
+
+
+    const categoryCardsList =
+        [...categoryCards]
+            .map(
+                card =>
+                    card.dataset.category
+            );
+
+
+    const allCategories =
+        [
+            ...new Set(
+                [
+                    ...categories,
+                    ...categoryCardsList
+                ]
+            )
+        ];
+
+
+    return allCategories.find(
+        category =>
+            categoryToSlug(category) === slug
+    );
+
+}
+
+
+
+function setBodyOverlayState() {
+
+    const articleOpen =
+        document.getElementById(
+            "articleOverlay"
+        );
+
+    const categoryOpen =
+        document.getElementById(
+            "categoryOverlay"
+        );
+
+
+    if (articleOpen || categoryOpen) {
+
+        document.body.classList.add(
+            "article-open"
+        );
+
+    }
+
+    else {
+
+        document.body.classList.remove(
+            "article-open"
+        );
+
+    }
+
+}
+
+
+
+// ======================================================
 // SEARCH
 // ======================================================
 
@@ -42,32 +140,37 @@ function searchArticles(query) {
         );
 
         return;
+
     }
 
 
-    const results = articles.filter(article => {
+    const results =
+        articles.filter(article => {
 
-        const searchableText = [
+            const searchableText = [
 
-            article.title,
+                article.title,
 
-            article.category,
+                article.category,
 
-            article.description,
+                article.description,
 
-            ...(article.keywords || [])
+                ...(article.keywords || [])
 
-        ]
-            .join(" ")
-            .toLowerCase();
+            ]
+                .join(" ")
+                .toLowerCase();
 
 
-        return searchableText.includes(query);
+            return searchableText.includes(
+                query
+            );
 
-    });
+        });
 
 
     displaySearchResults(results);
+
 }
 
 
@@ -104,39 +207,41 @@ function displaySearchResults(results) {
 
 
         return;
+
     }
 
 
-    searchResults.innerHTML = results
-        .map(article => `
+    searchResults.innerHTML =
+        results
+            .map(article => `
 
-            <button
-                class="search-result"
-                data-search-article="${article.id}"
-                type="button"
-            >
+                <button
+                    class="search-result"
+                    data-search-article="${article.id}"
+                    type="button"
+                >
 
-                <div>
+                    <div>
 
-                    <strong>
-                        ${article.title}
-                    </strong>
+                        <strong>
+                            ${article.title}
+                        </strong>
 
-                    <span>
-                        ${article.category}
+                        <span>
+                            ${article.category}
+                        </span>
+
+                    </div>
+
+
+                    <span class="result-arrow">
+                        ›
                     </span>
 
-                </div>
+                </button>
 
-
-                <span class="result-arrow">
-                    ›
-                </span>
-
-            </button>
-
-        `)
-        .join("");
+            `)
+            .join("");
 
 
     searchResults.classList.add(
@@ -166,11 +271,19 @@ function displaySearchResults(results) {
 
 
                 if (searchInput) {
+
                     searchInput.blur();
+
                 }
 
 
-                openArticle(articleID);
+                openArticle(
+                    articleID,
+                    {
+                        source: "search",
+                        updateHistory: true
+                    }
+                );
 
             }
         );
@@ -248,8 +361,19 @@ document.addEventListener(
 
 function openArticle(
     articleID,
-    updateHistory = true
+    options = {}
 ) {
+
+    const {
+
+        source = "direct",
+
+        category = null,
+
+        updateHistory = true
+
+    } = options;
+
 
     const article =
         articles.find(
@@ -266,8 +390,18 @@ function openArticle(
     removeArticleOverlay();
 
 
+    articleSource = source;
+
+
+    if (category) {
+
+        currentCategory = category;
+
+    }
+
+
     const stepsHTML =
-        article.steps
+        (article.steps || [])
             .map(
                 (step, index) => `
 
@@ -351,7 +485,8 @@ function openArticle(
                     </p>
 
 
-                    <div class="article-divider"></div>
+                    <div class="article-divider">
+                    </div>
 
 
                     <h2>
@@ -414,9 +549,7 @@ function openArticle(
     );
 
 
-    document.body.classList.add(
-        "article-open"
-    );
+    setBodyOverlayState();
 
 
     const backButton =
@@ -429,7 +562,7 @@ function openArticle(
 
         backButton.addEventListener(
             "click",
-            closeArticle
+            handleArticleBack
         );
 
     }
@@ -437,16 +570,62 @@ function openArticle(
 
     if (updateHistory) {
 
+        const state = {
+
+            type: "article",
+
+            article: articleID,
+
+            source: source,
+
+            category: category
+
+        };
+
+
         window.history.pushState(
-            {
-                type: "article",
-                article: articleID
-            },
+            state,
             "",
             `#${articleID}`
         );
 
     }
+
+}
+
+
+
+// ======================================================
+// ARTICLE BACK
+// ======================================================
+
+function handleArticleBack() {
+
+    /*
+       If the article was opened from a category,
+       browser history already contains the category
+       directly before the article.
+
+       Going back therefore restores that category.
+
+       Search, Popular and direct article links go
+       back to the homepage instead.
+    */
+
+
+    if (
+        articleSource === "category" &&
+        currentCategory
+    ) {
+
+        window.history.back();
+
+        return;
+
+    }
+
+
+    closeArticleToHome();
 
 }
 
@@ -461,32 +640,38 @@ function removeArticleOverlay() {
 
 
     if (overlay) {
+
         overlay.remove();
+
     }
+
+
+    setBodyOverlayState();
 
 }
 
 
 
-function closeArticle() {
+function closeArticleToHome() {
 
     removeArticleOverlay();
 
 
-    document.body.classList.remove(
-        "article-open"
+    articleSource = null;
+
+    currentCategory = null;
+
+
+    history.pushState(
+        {
+            type: "home"
+        },
+        "",
+        window.location.pathname
     );
 
 
-    if (window.location.hash) {
-
-        history.pushState(
-            {},
-            "",
-            window.location.pathname
-        );
-
-    }
+    setBodyOverlayState();
 
 }
 
@@ -509,7 +694,10 @@ categoryCards.forEach(card => {
                 card.dataset.category;
 
 
-            openCategory(category);
+            openCategory(
+                category,
+                true
+            );
 
         }
     );
@@ -518,9 +706,19 @@ categoryCards.forEach(card => {
 
 
 
-function openCategory(category) {
+function openCategory(
+    category,
+    updateHistory = true
+) {
+
+    removeArticleOverlay();
 
     removeCategoryOverlay();
+
+
+    currentCategory = category;
+
+    articleSource = null;
 
 
     const matchingArticles =
@@ -589,9 +787,11 @@ function openCategory(category) {
                     +
                 </div>
 
+
                 <h2>
                     More help is coming
                 </h2>
+
 
                 <p>
 
@@ -605,7 +805,6 @@ function openCategory(category) {
         `;
 
     }
-
 
 
     document.body.insertAdjacentHTML(
@@ -675,10 +874,7 @@ function openCategory(category) {
     );
 
 
-    document.body.classList.add(
-        "article-open"
-    );
-
+    setBodyOverlayState();
 
 
     const categoryBackButton =
@@ -691,11 +887,10 @@ function openCategory(category) {
 
         categoryBackButton.addEventListener(
             "click",
-            closeCategory
+            handleCategoryBack
         );
 
     }
-
 
 
     const articleButtons =
@@ -723,6 +918,36 @@ function openCategory(category) {
 
     });
 
+
+    if (updateHistory) {
+
+        const slug =
+            categoryToSlug(category);
+
+
+        window.history.pushState(
+            {
+                type: "category",
+                category: category
+            },
+            "",
+            `#category/${slug}`
+        );
+
+    }
+
+}
+
+
+
+// ======================================================
+// CATEGORY BACK
+// ======================================================
+
+function handleCategoryBack() {
+
+    window.history.back();
+
 }
 
 
@@ -736,21 +961,13 @@ function removeCategoryOverlay() {
 
 
     if (overlay) {
+
         overlay.remove();
+
     }
 
-}
 
-
-
-function closeCategory() {
-
-    removeCategoryOverlay();
-
-
-    document.body.classList.remove(
-        "article-open"
-    );
+    setBodyOverlayState();
 
 }
 
@@ -764,24 +981,31 @@ function openArticleFromCategory(
     articleID
 ) {
 
+    const category =
+        currentCategory;
+
+
     /*
-       IMPORTANT:
+       Create the article while the category still
+       exists underneath it.
 
-       Open the article FIRST.
-
-       The article overlay has a higher z-index
-       than the category overlay, so it appears
-       directly over the category page.
-
-       Only after the article exists do we remove
-       the category page underneath it.
-
-       This prevents the homepage from flashing
-       between the two screens.
+       This prevents the homepage flash.
     */
 
-    openArticle(articleID);
+    openArticle(
+        articleID,
+        {
+            source: "category",
+            category: category,
+            updateHistory: true
+        }
+    );
 
+
+    /*
+       The article is now visible above the category.
+       We can safely remove the category overlay.
+    */
 
     removeCategoryOverlay();
 
@@ -790,7 +1014,7 @@ function openArticleFromCategory(
 
 
 // ======================================================
-// POPULAR SOLUTION LINKS
+// POPULAR SOLUTIONS
 // ======================================================
 
 popularLinks.forEach(link => {
@@ -806,7 +1030,16 @@ popularLinks.forEach(link => {
                 link.dataset.article;
 
 
-            openArticle(articleID);
+            currentCategory = null;
+
+
+            openArticle(
+                articleID,
+                {
+                    source: "popular",
+                    updateHistory: true
+                }
+            );
 
         }
     );
@@ -816,44 +1049,143 @@ popularLinks.forEach(link => {
 
 
 // ======================================================
-// BROWSER BACK BUTTON
+// RENDER CURRENT URL / HISTORY STATE
+// ======================================================
+
+function renderCurrentLocation() {
+
+    removeArticleOverlay();
+
+    removeCategoryOverlay();
+
+
+    const hash =
+        window.location.hash
+            .replace("#", "");
+
+
+    /*
+       HOME
+    */
+
+    if (!hash) {
+
+        currentCategory = null;
+
+        articleSource = null;
+
+        setBodyOverlayState();
+
+        return;
+
+    }
+
+
+    /*
+       CATEGORY
+    */
+
+    if (
+        hash.startsWith(
+            "category/"
+        )
+    ) {
+
+        const slug =
+            hash.replace(
+                "category/",
+                ""
+            );
+
+
+        const category =
+            getCategoryFromSlug(
+                slug
+            );
+
+
+        if (category) {
+
+            openCategory(
+                category,
+                false
+            );
+
+            return;
+
+        }
+
+    }
+
+
+    /*
+       ARTICLE
+    */
+
+    const article =
+        articles.find(
+            item =>
+                item.id === hash
+        );
+
+
+    if (article) {
+
+        const state =
+            window.history.state || {};
+
+
+        const source =
+            state.source || "direct";
+
+
+        const category =
+            state.category || null;
+
+
+        currentCategory =
+            category;
+
+
+        openArticle(
+            article.id,
+            {
+                source: source,
+                category: category,
+                updateHistory: false
+            }
+        );
+
+
+        return;
+
+    }
+
+
+    /*
+       UNKNOWN HASH
+       Fall back to home.
+    */
+
+    currentCategory = null;
+
+    articleSource = null;
+
+    setBodyOverlayState();
+
+}
+
+
+
+// ======================================================
+// BROWSER BACK / FORWARD
 // ======================================================
 
 window.addEventListener(
     "popstate",
     () => {
 
-        removeArticleOverlay();
-
-        removeCategoryOverlay();
-
-
-        document.body.classList.remove(
-            "article-open"
-        );
-
-
-        const articleID =
-            window.location.hash.replace(
-                "#",
-                ""
-            );
-
-
-        if (
-            articleID &&
-            articles.some(
-                article =>
-                    article.id === articleID
-            )
-        ) {
-
-            openArticle(
-                articleID,
-                false
-            );
-
-        }
+        renderCurrentLocation();
 
     }
 );
@@ -861,34 +1193,36 @@ window.addEventListener(
 
 
 // ======================================================
-// DIRECT ARTICLE LINKS
+// INITIAL PAGE LOAD
 // ======================================================
 
 window.addEventListener(
     "DOMContentLoaded",
     () => {
 
-        const articleID =
-            window.location.hash.replace(
-                "#",
-                ""
-            );
+        /*
+           Establish a home state when the user
+           arrives normally.
 
+           Existing direct article URLs are left
+           intact so shared article links continue
+           to work.
+        */
 
-        if (
-            articleID &&
-            articles.some(
-                article =>
-                    article.id === articleID
-            )
-        ) {
+        if (!window.location.hash) {
 
-            openArticle(
-                articleID,
-                false
+            history.replaceState(
+                {
+                    type: "home"
+                },
+                "",
+                window.location.pathname
             );
 
         }
+
+
+        renderCurrentLocation();
 
     }
 );

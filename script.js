@@ -1,222 +1,874 @@
 // ======================================================
+// TECH HELP — SITE ENGINE
+// ======================================================
+
+
+// ======================================================
+// ELEMENTS
+// ======================================================
+
+const searchInput =
+    document.getElementById("searchInput");
+
+const searchResults =
+    document.getElementById("searchResults");
+
+const categoryCards =
+    document.querySelectorAll(".category-card");
+
+const popularLinks =
+    document.querySelectorAll("[data-article]");
+
+
+
+// ======================================================
 // SEARCH
 // ======================================================
 
-const searchInput = document.getElementById("searchInput");
-const searchResults = document.getElementById("searchResults");
-
 function searchArticles(query) {
 
-    query = query.toLowerCase().trim();
+    query =
+        query
+            .toLowerCase()
+            .trim();
+
 
     if (!query) {
+
         searchResults.innerHTML = "";
-        searchResults.classList.remove("visible");
+
+        searchResults.classList.remove(
+            "visible"
+        );
+
         return;
     }
+
 
     const results = articles.filter(article => {
 
         const searchableText = [
+
             article.title,
+
             article.category,
+
             article.description,
-            ...article.keywords
+
+            ...(article.keywords || [])
+
         ]
             .join(" ")
             .toLowerCase();
 
+
         return searchableText.includes(query);
+
     });
+
 
     displaySearchResults(results);
 }
 
 
+
 function displaySearchResults(results) {
 
-    if (results.length === 0) {
-        searchResults.innerHTML = `
-            <div class="no-results">
-                <strong>No solutions found</strong>
-                <span>Try searching for something else.</span>
-            </div>
-        `;
-
-        searchResults.classList.add("visible");
+    if (!searchResults) {
         return;
     }
 
-    searchResults.innerHTML = results.map(article => `
-        <button
-            class="search-result"
-            onclick="openArticle('${article.id}')"
-        >
-            <div>
-                <strong>${article.title}</strong>
-                <span>${article.category}</span>
+
+    if (results.length === 0) {
+
+        searchResults.innerHTML = `
+
+            <div class="no-results">
+
+                <strong>
+                    No solutions found
+                </strong>
+
+                <span>
+                    Try searching for something else.
+                </span>
+
             </div>
 
-            <span class="result-arrow">›</span>
-        </button>
-    `).join("");
+        `;
 
-    searchResults.classList.add("visible");
+
+        searchResults.classList.add(
+            "visible"
+        );
+
+
+        return;
+    }
+
+
+    searchResults.innerHTML = results
+        .map(article => `
+
+            <button
+                class="search-result"
+                data-search-article="${article.id}"
+                type="button"
+            >
+
+                <div>
+
+                    <strong>
+                        ${article.title}
+                    </strong>
+
+                    <span>
+                        ${article.category}
+                    </span>
+
+                </div>
+
+
+                <span class="result-arrow">
+                    ›
+                </span>
+
+            </button>
+
+        `)
+        .join("");
+
+
+    searchResults.classList.add(
+        "visible"
+    );
+
+
+    const resultButtons =
+        searchResults.querySelectorAll(
+            "[data-search-article]"
+        );
+
+
+    resultButtons.forEach(button => {
+
+        button.addEventListener(
+            "click",
+            () => {
+
+                const articleID =
+                    button.dataset.searchArticle;
+
+
+                searchResults.classList.remove(
+                    "visible"
+                );
+
+
+                if (searchInput) {
+                    searchInput.blur();
+                }
+
+
+                openArticle(articleID);
+
+            }
+        );
+
+    });
+
 }
 
+
+
+// ======================================================
+// SEARCH EVENTS
+// ======================================================
 
 if (searchInput) {
 
     const handleSearch = () => {
-        searchArticles(searchInput.value);
+
+        searchArticles(
+            searchInput.value
+        );
+
     };
 
-    searchInput.addEventListener("input", handleSearch);
-    searchInput.addEventListener("keyup", handleSearch);
-    searchInput.addEventListener("search", handleSearch);
+
+    searchInput.addEventListener(
+        "input",
+        handleSearch
+    );
+
+
+    searchInput.addEventListener(
+        "keyup",
+        handleSearch
+    );
+
+
+    searchInput.addEventListener(
+        "search",
+        handleSearch
+    );
 
 }
+
+
+
+// Hide results when clicking elsewhere
+
+document.addEventListener(
+    "click",
+    event => {
+
+        if (
+            searchResults &&
+            searchInput &&
+            !event.target.closest(
+                ".search-wrapper"
+            )
+        ) {
+
+            searchResults.classList.remove(
+                "visible"
+            );
+
+        }
+
+    }
+);
+
 
 
 // ======================================================
 // ARTICLE VIEW
 // ======================================================
 
-function openArticle(articleID) {
+function openArticle(
+    articleID,
+    updateHistory = true
+) {
 
-    const article = articles.find(item => item.id === articleID);
-
-    if (!article) return;
-
-    const stepsHTML = article.steps.map((step, index) => `
-        <div class="article-step">
-
-            <div class="step-number">
-                ${index + 1}
-            </div>
-
-            <div class="step-content">
-                <h3>${step.title}</h3>
-                <p>${step.text}</p>
-            </div>
-
-        </div>
-    `).join("");
+    const article =
+        articles.find(
+            item =>
+                item.id === articleID
+        );
 
 
-    document.body.insertAdjacentHTML("beforeend", `
+    if (!article) {
+        return;
+    }
 
-        <div class="article-overlay" id="articleOverlay">
+
+    removeArticleOverlay();
+
+
+    const stepsHTML =
+        article.steps
+            .map(
+                (step, index) => `
+
+                    <div class="article-step">
+
+                        <div class="step-number">
+
+                            ${index + 1}
+
+                        </div>
+
+
+                        <div class="step-content">
+
+                            <h3>
+                                ${step.title}
+                            </h3>
+
+                            <p>
+                                ${step.text}
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                `
+            )
+            .join("");
+
+
+    document.body.insertAdjacentHTML(
+        "beforeend",
+        `
+
+        <div
+            class="article-overlay"
+            id="articleOverlay"
+        >
 
             <div class="article-page">
 
+
                 <div class="article-nav">
-                    <button onclick="closeArticle()" class="back-button">
+
+                    <button
+                        type="button"
+                        class="back-button"
+                        id="articleBackButton"
+                    >
+
                         ← Back
+
                     </button>
+
                 </div>
+
+
 
                 <article>
 
+
                     <p class="article-category">
+
                         ${article.category}
+
                     </p>
 
-                    <h1>${article.title}</h1>
+
+                    <h1>
+
+                        ${article.title}
+
+                    </h1>
+
 
                     <p class="article-description">
+
                         ${article.description}
+
                     </p>
+
 
                     <div class="article-divider"></div>
 
-                    <h2>Try these steps in order</h2>
+
+                    <h2>
+                        Try these steps in order
+                    </h2>
+
 
                     <div class="article-steps">
+
                         ${stepsHTML}
+
                     </div>
+
 
 
                     <div class="article-help">
 
-                        <div class="article-help-icon">?</div>
 
-                        <h2>Still not working?</h2>
+                        <div class="article-help-icon">
+
+                            ?
+
+                        </div>
+
+
+                        <h2>
+                            Still not working?
+                        </h2>
+
 
                         <p>
+
                             Submit a help request and let IT know
                             which steps you've already tried.
+
                         </p>
 
-                        <a href="#" class="primary-button">
+
+                        <a
+                            href="#"
+                            class="primary-button"
+                        >
+
                             Submit a Help Request
+
                         </a>
+
 
                     </div>
 
+
                 </article>
+
 
             </div>
 
         </div>
 
-    `);
-
-    document.body.classList.add("article-open");
-
-    window.history.pushState(
-        { article: articleID },
-        "",
-        `#${articleID}`
+        `
     );
+
+
+    document.body.classList.add(
+        "article-open"
+    );
+
+
+    const backButton =
+        document.getElementById(
+            "articleBackButton"
+        );
+
+
+    if (backButton) {
+
+        backButton.addEventListener(
+            "click",
+            closeArticle
+        );
+
+    }
+
+
+    if (updateHistory) {
+
+        window.history.pushState(
+            {
+                type: "article",
+                article: articleID
+            },
+            "",
+            `#${articleID}`
+        );
+
+    }
+
 }
+
+
+
+function removeArticleOverlay() {
+
+    const overlay =
+        document.getElementById(
+            "articleOverlay"
+        );
+
+
+    if (overlay) {
+        overlay.remove();
+    }
+
+}
+
 
 
 function closeArticle() {
 
-    const overlay = document.getElementById("articleOverlay");
+    removeArticleOverlay();
 
-    if (overlay) {
-        overlay.remove();
-    }
 
-    document.body.classList.remove("article-open");
+    document.body.classList.remove(
+        "article-open"
+    );
+
 
     if (window.location.hash) {
+
         history.pushState(
+            {},
             "",
-            document.title,
             window.location.pathname
         );
+
     }
+
 }
 
 
-// Handle browser back button
 
-window.addEventListener("popstate", () => {
+// ======================================================
+// CATEGORY BROWSER
+// ======================================================
 
-    const overlay = document.getElementById("articleOverlay");
+categoryCards.forEach(card => {
+
+    card.addEventListener(
+        "click",
+        event => {
+
+            event.preventDefault();
+
+
+            const category =
+                card.dataset.category;
+
+
+            openCategory(category);
+
+        }
+    );
+
+});
+
+
+
+function openCategory(category) {
+
+    removeCategoryOverlay();
+
+
+    const matchingArticles =
+        articles.filter(
+            article =>
+                article.category === category
+        );
+
+
+    let articleListHTML;
+
+
+    if (matchingArticles.length > 0) {
+
+        articleListHTML =
+            matchingArticles
+                .map(article => `
+
+                    <button
+                        type="button"
+                        class="category-article"
+                        data-category-article="${article.id}"
+                    >
+
+                        <div class="category-article-content">
+
+
+                            <strong>
+
+                                ${article.title}
+
+                            </strong>
+
+
+                            <span>
+
+                                ${article.description}
+
+                            </span>
+
+
+                        </div>
+
+
+                        <span class="category-article-arrow">
+
+                            ›
+
+                        </span>
+
+
+                    </button>
+
+                `)
+                .join("");
+
+    }
+
+    else {
+
+        articleListHTML = `
+
+            <div class="empty-category">
+
+                <div class="empty-category-icon">
+                    +
+                </div>
+
+                <h2>
+                    More help is coming
+                </h2>
+
+                <p>
+
+                    We haven't added troubleshooting
+                    guides for this category yet.
+
+                </p>
+
+            </div>
+
+        `;
+
+    }
+
+
+
+    document.body.insertAdjacentHTML(
+        "beforeend",
+        `
+
+        <div
+            class="category-overlay"
+            id="categoryOverlay"
+        >
+
+            <div class="category-page">
+
+
+                <div class="category-nav">
+
+                    <button
+                        type="button"
+                        class="back-button"
+                        id="categoryBackButton"
+                    >
+
+                        ← Back
+
+                    </button>
+
+                </div>
+
+
+
+                <main class="category-content">
+
+
+                    <p class="article-category">
+                        TECH HELP
+                    </p>
+
+
+                    <h1>
+                        ${category}
+                    </h1>
+
+
+                    <p class="category-description">
+
+                        Choose the problem that best matches
+                        what you're experiencing.
+
+                    </p>
+
+
+                    <div class="category-solutions">
+
+                        ${articleListHTML}
+
+                    </div>
+
+
+                </main>
+
+
+            </div>
+
+        </div>
+
+        `
+    );
+
+
+    document.body.classList.add(
+        "article-open"
+    );
+
+
+
+    const categoryBackButton =
+        document.getElementById(
+            "categoryBackButton"
+        );
+
+
+    if (categoryBackButton) {
+
+        categoryBackButton.addEventListener(
+            "click",
+            closeCategory
+        );
+
+    }
+
+
+
+    const articleButtons =
+        document.querySelectorAll(
+            "[data-category-article]"
+        );
+
+
+    articleButtons.forEach(button => {
+
+        button.addEventListener(
+            "click",
+            () => {
+
+                const articleID =
+                    button.dataset.categoryArticle;
+
+
+                openArticleFromCategory(
+                    articleID
+                );
+
+            }
+        );
+
+    });
+
+}
+
+
+
+function removeCategoryOverlay() {
+
+    const overlay =
+        document.getElementById(
+            "categoryOverlay"
+        );
+
 
     if (overlay) {
         overlay.remove();
-        document.body.classList.remove("article-open");
     }
+
+}
+
+
+
+function closeCategory() {
+
+    removeCategoryOverlay();
+
+
+    document.body.classList.remove(
+        "article-open"
+    );
+
+}
+
+
+
+function openArticleFromCategory(
+    articleID
+) {
+
+    removeCategoryOverlay();
+
+
+    openArticle(articleID);
+
+}
+
+
+
+// ======================================================
+// POPULAR SOLUTION LINKS
+// ======================================================
+
+popularLinks.forEach(link => {
+
+    link.addEventListener(
+        "click",
+        event => {
+
+            event.preventDefault();
+
+
+            const articleID =
+                link.dataset.article;
+
+
+            openArticle(articleID);
+
+        }
+    );
 
 });
 
 
-// Allow direct links to articles
 
-window.addEventListener("DOMContentLoaded", () => {
+// ======================================================
+// BROWSER BACK BUTTON
+// ======================================================
 
-    const articleID = window.location.hash.replace("#", "");
+window.addEventListener(
+    "popstate",
+    () => {
 
-    if (
-        articleID &&
-        articles.some(article => article.id === articleID)
-    ) {
-        openArticle(articleID);
+        removeArticleOverlay();
+
+        removeCategoryOverlay();
+
+
+        document.body.classList.remove(
+            "article-open"
+        );
+
+
+        const articleID =
+            window.location.hash.replace(
+                "#",
+                ""
+            );
+
+
+        if (
+            articleID &&
+            articles.some(
+                article =>
+                    article.id === articleID
+            )
+        ) {
+
+            openArticle(
+                articleID,
+                false
+            );
+
+        }
+
     }
+);
 
-});
+
+
+// ======================================================
+// DIRECT ARTICLE LINKS
+// ======================================================
+
+window.addEventListener(
+    "DOMContentLoaded",
+    () => {
+
+        const articleID =
+            window.location.hash.replace(
+                "#",
+                ""
+            );
+
+
+        if (
+            articleID &&
+            articles.some(
+                article =>
+                    article.id === articleID
+            )
+        ) {
+
+            openArticle(
+                articleID,
+                false
+            );
+
+        }
+
+    }
+);

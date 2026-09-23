@@ -254,9 +254,15 @@ function displaySearchResults(results) {
 
 
 if (searchInput) {
-    searchInput.addEventListener("input", event => {
-        searchArticles(event.target.value);
-    });
+
+    const handleSearch = () => {
+        searchArticles(searchInput.value);
+    };
+
+    searchInput.addEventListener("input", handleSearch);
+    searchInput.addEventListener("keyup", handleSearch);
+    searchInput.addEventListener("search", handleSearch);
+
 }
 
 

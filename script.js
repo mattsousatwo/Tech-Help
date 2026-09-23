@@ -217,7 +217,7 @@ if (searchInput) {
 
 
 
-// Hide results when clicking elsewhere
+// Hide search results when clicking elsewhere
 
 document.addEventListener(
     "click",
@@ -756,14 +756,34 @@ function closeCategory() {
 
 
 
+// ======================================================
+// CATEGORY → ARTICLE
+// ======================================================
+
 function openArticleFromCategory(
     articleID
 ) {
 
-    removeCategoryOverlay();
+    /*
+       IMPORTANT:
 
+       Open the article FIRST.
+
+       The article overlay has a higher z-index
+       than the category overlay, so it appears
+       directly over the category page.
+
+       Only after the article exists do we remove
+       the category page underneath it.
+
+       This prevents the homepage from flashing
+       between the two screens.
+    */
 
     openArticle(articleID);
+
+
+    removeCategoryOverlay();
 
 }
 

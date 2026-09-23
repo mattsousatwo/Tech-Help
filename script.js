@@ -16,8 +16,8 @@ const searchResults =
 const categoryCards =
     document.querySelectorAll(".category-card");
 
-const popularLinks =
-    document.querySelectorAll("[data-article]");
+const popularSolutions =
+    document.getElementById("popularSolutions");
 
 
 
@@ -49,13 +49,14 @@ function categoryToSlug(category) {
 
 function getCategoryFromSlug(slug) {
 
-    const categories = [
-        ...new Set(
-            articles.map(
-                article => article.category
+    const categories =
+        [
+            ...new Set(
+                articles.map(
+                    article => article.category
+                )
             )
-        )
-    ];
+        ];
 
 
     const categoryCardsList =
@@ -277,6 +278,9 @@ function displaySearchResults(results) {
                 }
 
 
+                currentCategory = null;
+
+
                 openArticle(
                     articleID,
                     {
@@ -352,6 +356,111 @@ document.addEventListener(
 
     }
 );
+
+
+
+// ======================================================
+// POPULAR SOLUTIONS
+// ======================================================
+
+function renderPopularSolutions() {
+
+    if (!popularSolutions) {
+        return;
+    }
+
+
+    const popularArticles =
+        articles.filter(
+            article =>
+                article.popular === true
+        );
+
+
+    if (popularArticles.length === 0) {
+
+        popularSolutions.innerHTML = `
+
+            <div class="no-results">
+
+                <strong>
+                    No popular solutions yet
+                </strong>
+
+                <span>
+                    Troubleshooting guides are being added.
+                </span>
+
+            </div>
+
+        `;
+
+
+        return;
+
+    }
+
+
+    popularSolutions.innerHTML =
+        popularArticles
+            .map(article => `
+
+                <a
+                    href="#${article.id}"
+                    class="solution"
+                    data-popular-article="${article.id}"
+                >
+
+                    <span>
+                        ${article.title}
+                    </span>
+
+                    <span>
+                        ›
+                    </span>
+
+                </a>
+
+            `)
+            .join("");
+
+
+    const popularArticleLinks =
+        popularSolutions.querySelectorAll(
+            "[data-popular-article]"
+        );
+
+
+    popularArticleLinks.forEach(link => {
+
+        link.addEventListener(
+            "click",
+            event => {
+
+                event.preventDefault();
+
+
+                const articleID =
+                    link.dataset.popularArticle;
+
+
+                currentCategory = null;
+
+
+                openArticle(
+                    articleID,
+                    {
+                        source: "popular",
+                        updateHistory: true
+                    }
+                );
+
+            }
+        );
+
+    });
+
+}
 
 
 
@@ -600,18 +709,6 @@ function openArticle(
 // ======================================================
 
 function handleArticleBack() {
-
-    /*
-       If the article was opened from a category,
-       browser history already contains the category
-       directly before the article.
-
-       Going back therefore restores that category.
-
-       Search, Popular and direct article links go
-       back to the homepage instead.
-    */
-
 
     if (
         articleSource === "category" &&
@@ -986,10 +1083,11 @@ function openArticleFromCategory(
 
 
     /*
-       Create the article while the category still
-       exists underneath it.
+       Open the article while the category screen
+       still exists underneath it.
 
-       This prevents the homepage flash.
+       This prevents the homepage flash between
+       the category page and article page.
     */
 
     openArticle(
@@ -1003,48 +1101,13 @@ function openArticleFromCategory(
 
 
     /*
-       The article is now visible above the category.
-       We can safely remove the category overlay.
+       Once the article is visible above the
+       category screen, remove the category.
     */
 
     removeCategoryOverlay();
 
 }
-
-
-
-// ======================================================
-// POPULAR SOLUTIONS
-// ======================================================
-
-popularLinks.forEach(link => {
-
-    link.addEventListener(
-        "click",
-        event => {
-
-            event.preventDefault();
-
-
-            const articleID =
-                link.dataset.article;
-
-
-            currentCategory = null;
-
-
-            openArticle(
-                articleID,
-                {
-                    source: "popular",
-                    updateHistory: true
-                }
-            );
-
-        }
-    );
-
-});
 
 
 
@@ -1064,9 +1127,7 @@ function renderCurrentLocation() {
             .replace("#", "");
 
 
-    /*
-       HOME
-    */
+    // HOME
 
     if (!hash) {
 
@@ -1081,9 +1142,7 @@ function renderCurrentLocation() {
     }
 
 
-    /*
-       CATEGORY
-    */
+    // CATEGORY
 
     if (
         hash.startsWith(
@@ -1118,9 +1177,7 @@ function renderCurrentLocation() {
     }
 
 
-    /*
-       ARTICLE
-    */
+    // ARTICLE
 
     const article =
         articles.find(
@@ -1162,10 +1219,7 @@ function renderCurrentLocation() {
     }
 
 
-    /*
-       UNKNOWN HASH
-       Fall back to home.
-    */
+    // UNKNOWN HASH
 
     currentCategory = null;
 
@@ -1200,14 +1254,8 @@ window.addEventListener(
     "DOMContentLoaded",
     () => {
 
-        /*
-           Establish a home state when the user
-           arrives normally.
+        renderPopularSolutions();
 
-           Existing direct article URLs are left
-           intact so shared article links continue
-           to work.
-        */
 
         if (!window.location.hash) {
 

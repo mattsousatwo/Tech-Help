@@ -71,12 +71,12 @@
 
         --header-background: rgba(13, 14, 16, .88);
 
-        --help-background: #f2f3f5;
-        --help-text: #111315;
-        --help-secondary: #5f6369;
-
-        --button-background: #111315;
-        --button-text: #ffffff;
+         --help-background: #202328;
+         --help-text: #f3f4f6;
+         --help-secondary: #a9adb5;
+         
+         --button-background: #f3f4f6;
+         --button-text: #17181a;
 
         --shadow:
             0 18px 45px rgba(0, 0, 0, .38);
